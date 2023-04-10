@@ -76,152 +76,36 @@ class Board {
       console.log("You are on the same square!");
       return;
     }
-    // create visited Set
-    const visited = new Set();
 
-    // initialise queue for BFS
+    const visited = new Set();
     let queue = [[start, []]];
 
     while (queue.length) {
       let [curSq, [...path]] = queue.shift();
       path.push(curSq);
 
-      if (curSq === destination) return path;
+      if (curSq === destination) {
+        console.log(
+          `You made it in ${path.length - 1} moves! Here is your path:`
+        );
+        for (const step of path) {
+          console.log(step.value);
+        }
+        return path;
+      }
 
       if (!visited.has(curSq)) {
-        queue.push(...curSq.connections.map((v) => v, path));
+        queue.push(...curSq.connections.map((v) => [v, path]));
       }
 
       visited.add(curSq);
     }
   }
-  // knightTravails(start, destination) {
-  //   if (start === destination) {
-  //     console.log("You are on the same square!");
-  //     return;
-  //   }
-  //   // create visited Set
-  //   const visited = new Set();
-  //
-  //   // initialise queue for BFS
-  //   const queue = [start];
-  //
-  //   // initialise predecessor obj and tail
-  //   const predecessor = {};
-  //   let tail = 0;
-  //
-  //   // initialise path
-  //   let path;
-  //
-  //   while (tail < queue.length) {
-  //     // with u we denote the previous node/square,
-  //     // here we assign it to queue[0] and increment by 1
-  //     let u = queue[tail++];
-  //
-  //     if (!u.connections) continue;
-  //
-  //     const connections = u.connections;
-  //
-  //     for (let i = 0; i < connections.length; i++) {
-  //       // with v we denote the next node/square
-  //       const v = connections[i];
-  //       if (visited.has(v)) continue;
-  //       visited.add(v);
-  //
-  //       if (v === destination) {
-  //         path = [v];
-  //
-  //         // if we found the destination we backtrack to root
-  //         // to find the path
-  //         while (u !== start) {
-  //           path.push(u);
-  //           u = predecessor[u];
-  //         }
-  //         path.push(u);
-  //         path.reverse();
-  //         return path;
-  //       }
-  //       predecessor[v] = u;
-  //       queue.push(v);
-  //     }
-  //   }
-  // }
 }
-
-// knightTravails(start, destination) {
-//   // create visited Set
-//   const visited = new Set();
-//   visited.add(start);
-//
-//   // initialise queue for BFS
-//   const queue = [];
-//   queue.push(start);
-//
-//   // initialise path array
-//   const path = [];
-//
-//   while (queue.length > 0) {
-//     const currentSquare = queue.shift();
-//
-//     // check if we have reached the square
-//     if (currentSquare === destination) {
-//       console.log(`You made it in ${path.length} moves! Here is your path:`);
-//       for (const step of path) {
-//         console.log(step.value);
-//       }
-//       return;
-//     }
-//
-//     // else continue through graph
-//     currentSquare.connections.forEach((connection) => {
-//       if (!visited.has(connection)) {
-//         visited.add(connection);
-//         queue.push(connection);
-//       }
-//     });
-//   }
-// }
 
 const board = new Board();
 
-const startingSq = board.squares[27];
-const destinationSq = board.squares[35];
-
-// console.log(startingSq, destinationSq);
+const startingSq = board.squares[0];
+const destinationSq = board.squares[54];
 
 board.knightTravails(startingSq, destinationSq);
-//
-
-const graph = {
-  1: [2, 3, 4],
-  2: [5, 6],
-  3: [10],
-  4: [7, 8],
-  5: [9, 10],
-  7: [11, 12],
-  11: [13],
-};
-
-function bfs(graph, start, end) {
-  let queue = [[start, []]],
-    seen = new Set();
-
-  while (queue.length) {
-    let [curVert, [...path]] = queue.shift();
-    path.push(curVert);
-    if (curVert === end) return path;
-
-    if (!seen.has(curVert) && graph[curVert]) {
-      queue.push(...graph[curVert].map((v) => [v, path]));
-    }
-    seen.add(curVert);
-  }
-}
-
-// console.log(bfs(graph, 1, 13));
-//
-
-let asd = [[1, [3]]];
-let [b, [...c]] = asd.shift();
-
-console.log(c);
