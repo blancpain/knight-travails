@@ -121,31 +121,6 @@ class Board {
         queue.push(v);
       }
     }
-
-    return path;
-
-    // for (let i = 0; i < currentSquare.connections.length; i += 1) {
-    //   const currentConnection = currentSquare.connections[i];
-    //   if (currentConnection === destination) {
-    //     visited.add(currentConnection);
-    //     const msg = visited.size - 1 < 2 ? "move" : "moves";
-    //     console.log(
-    //       `You made it in ${visited.size - 1} ${msg}! Here is your path:`
-    //     );
-    //     for (const step of visited) {
-    //       console.log(step.value);
-    //     }
-    //     return;
-    //   }
-    // }
-    //
-    // for (let i = 0; i < currentSquare.connections.length; i += 1) {
-    //   const currentConnection = currentSquare.connections[i];
-    //   if (!visited.has(currentConnection)) {
-    //     visited.add(currentConnection);
-    //     queue.push(currentConnection);
-    //   }
-    // }
   }
 }
 
