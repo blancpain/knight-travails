@@ -72,6 +72,16 @@ class Board {
   }
 
   knightTravails(start, destination) {
+    //lookup squares
+    this.squares.forEach((square) => {
+      if (square.value.toString() === [start].toString()) {
+        start = square;
+      }
+      if (square.value.toString() === [destination].toString()) {
+        destination = square;
+      }
+    });
+
     if (start === destination) {
       console.log("You are on the same square!");
       return;
@@ -105,7 +115,8 @@ class Board {
 
 const board = new Board();
 
-const startingSq = board.squares[0];
-const destinationSq = board.squares[54];
-
-board.knightTravails(startingSq, destinationSq);
+// board.knightTravails([3, 3], [4, 3]);
+// console.log("------------------------------");
+board.knightTravails([0, 0], [1, 2]);
+// console.log("------------------------------");
+// board.knightTravails([3, 1], [7, 7]);
