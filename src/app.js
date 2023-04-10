@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 /* eslint-disable max-classes-per-file */
 class Square {
@@ -72,7 +74,7 @@ class Board {
   }
 
   knightTravails(start, destination) {
-    //lookup squares
+    // lookup start and end squares
     this.squares.forEach((square) => {
       if (square.value.toString() === [start].toString()) {
         start = square;
@@ -87,24 +89,37 @@ class Board {
       return;
     }
 
+    // utilise Set for visited squares as only unique values allowed
     const visited = new Set();
-    let queue = [[start, []]];
+    // we use queue to store not only the connections but also
+    // the full path to that particular square
+    const queue = [[start, []]];
 
     while (queue.length) {
-      let [curSq, [...path]] = queue.shift();
+      // we use the spread operator for path to make sure
+      // we are creating a shallow copy of the path array and we
+      // update it for each connection/square to ensure we are not
+      // mutating the original array
+      const [curSq, [...path]] = queue.shift();
       path.push(curSq);
 
       if (curSq === destination) {
-        console.log(
-          `You made it in ${path.length - 1} moves! Here is your path:`
-        );
+        // once we have located the right square we already have path
+        // stored and updated so we can use that
+        const numOfMoves = path.length - 1;
+        const msg = numOfMoves === 1 ? "move" : "moves";
+        console.log(`You made it in ${numOfMoves} ${msg}! Here is your path:`);
         for (const step of path) {
           console.log(step.value);
         }
-        return path;
+        return;
       }
 
       if (!visited.has(curSq)) {
+        // add the next connection(square) and the full path to it
+        // the path would be the same across all connections in this current
+        // loop as the path IS in fact the same from a given square each of
+        // these squares
         queue.push(...curSq.connections.map((v) => [v, path]));
       }
 
@@ -115,8 +130,9 @@ class Board {
 
 const board = new Board();
 
-// board.knightTravails([3, 3], [4, 3]);
-// console.log("------------------------------");
+// testing...
+board.knightTravails([3, 3], [4, 3]);
+console.log("------------------------------");
 board.knightTravails([0, 0], [1, 2]);
-// console.log("------------------------------");
-// board.knightTravails([3, 1], [7, 7]);
+console.log("------------------------------");
+board.knightTravails([3, 1], [7, 7]);
